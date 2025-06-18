@@ -1,0 +1,89 @@
+<div class="main-content">
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+    <p style="color: white">Chargement...</p>
+  </ngx-spinner>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card custom-card">
+        <div class="card-body">
+          <fieldset class="custom-fieldset" [ngClass]="getFieldsetStatus(demandes[0])" *ngIf="demandes.length > 0">
+            <legend class="custom-legend">
+              <i class="fas fa-list pr-2"></i>Liste des demandes
+            </legend>
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="d-flex align-items-center entries-select">
+                <span>Afficher</span>
+                <select class="form-control form-control-sm mx-2">
+                  <option>25</option>
+                  <option>50</option>
+                  <option>100</option>
+                </select>
+                <span>entrées</span>
+              </div>
+              <button class="btn btn-cnaps-box-shadow">
+                <i class="fas fa-sync-alt pr-2"></i>Actualiser
+              </button>
+            </div>
+            <div class="table-responsive custom-table-container">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Periode</th>
+                    <th>Date de Création</th>
+                    <th>État</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let demande of demandes" [ngClass]="getFieldsetStatus(demande)">
+                    <td class="text-uppercase">{{demande.periode}}</td>
+                    <td>{{demande.dateCreation | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-uppercase">{{demande.etatNom}}</td>
+                    <td>{{demande.telephone}}</td>
+                    <td>{{demande.email}}</td>
+                    <td>
+                      <button class="btn btn-preview" (click)="openPreview(demande)">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-4">
+              <div class="pagination-info">
+                Affichage de <span>1</span> à <span>25</span> sur <span>100</span> entrées
+              </div>
+              <nav>
+                <ul class="pagination pagination-sm mb-0">
+                  <li class="page-item"><a class="page-link" href="#">Précédent</a></li>
+                  <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
+                </ul>
+              </nav>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Move this outside the main-content div -->
+  <div class="preview-modal" *ngIf="showPreviewModal && selectedDemandeId">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closePreview()">
+        <i class="fas fa-times"></i>
+      </button>
+      <app-email [idCrgDemande]="selectedDemandeId"></app-email>
+      <div class="modal-footer">
+        <button class="btn btn-export" (click)="exportPdf()">
+          <i class="fas fa-file-pdf"></i> Export PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

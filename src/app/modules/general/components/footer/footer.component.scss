@@ -1,0 +1,93 @@
+// $primary-blue: #103373;
+// $light-bg: #f8f9fa;
+// $border-color: #e9ecef;
+
+// .footer {
+//   background-color: inherit; // Utilise la couleur de fond de la page
+//   border-top: 1px solid $border-color;
+//   padding: 0.3rem 0;
+//   position: relative;
+//   width: 100%;
+//   margin-top: auto;
+
+//   .container-fluid {
+//     max-width: 1200px;
+//     margin: 0 auto;
+//     padding: 0 1rem;
+//   }
+
+//   .footer-content {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     min-height: 200px;
+//     padding: 0 1rem; // Add padding to ensure content is not touching the edges
+//   }
+
+//   .footer-slogan {
+//     color: $primary-blue;
+//     font-size: 1rem;
+//     font-weight: 500;
+//     font-family: 'Montserrat', sans-serif;
+//     display: flex;
+//     align-items: center;
+//     gap: 0.5rem;
+
+//     i {
+//       font-size: 0.875rem;
+//       opacity: 0.8;
+//     }
+//   }
+
+//   .footer-copyright {
+//     color: $primary-blue;
+//     font-size: 0.875rem;
+//     font-family: 'Montserrat', sans-serif;
+
+//     .footer-link {
+//       color: $primary-blue;
+//       text-decoration: none;
+//       font-weight: 600;
+//       transition: opacity 0.2s ease;
+
+//       &:hover {
+//         opacity: 0.8;
+//       }
+//     }
+//   }
+// }
+
+// // Pour que le footer reste en bas
+// :host {
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100%;
+//   position: relative;
+// }
+
+// .main-content {
+//   flex: 1 0 auto;
+//   padding-bottom: 5px; // Espace pour le footer
+// }
+
+// // Media queries
+// @media (max-width: 768px) {
+//   .footer {
+//     padding: 1rem 0;
+
+//     .footer-content {
+//       flex-direction: column;
+//       align-items: center;
+//     }
+
+//     .footer-slogan {
+//       font-size: 0.875rem;
+//       text-align: center;
+//     }
+
+//     .footer-copyright {
+//       font-size: 0.75rem;
+//       text-align: center;
+//     }
+//   }
+// }

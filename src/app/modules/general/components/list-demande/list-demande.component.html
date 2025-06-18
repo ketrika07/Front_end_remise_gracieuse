@@ -1,0 +1,109 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Chargement...</p>
+</ngx-spinner>
+<p style="color: white" *ngIf="isLoading">Chargement...</p>
+
+<div class="content-wrapper">
+  <div class="page-title">
+    <h1>
+      <i class="fas fa-file-signature"></i>
+      Demande De Commission De Remise Gracieuse
+    </h1>
+  </div>
+
+  <div class="search-container">
+    <legend class="custom-legend">
+      <i class="fas fa-search"></i> Recherche
+    </legend>
+    <div class="search-inputs-horizontal row">
+      <div class="input-item col-md-3">
+        <input type="text"
+               [(ngModel)]="searchCriteria.matricule"
+               (ngModelChange)="onAutomaticSearch()"
+               name="matricule"
+               placeholder="Matricule..." />
+      </div>
+      <div class="input-item col-md-3">
+        <input type="date"
+               [(ngModel)]="searchCriteria.dateDebut"
+               (ngModelChange)="onAutomaticSearch()"
+               name="dateDebut" />
+      </div>
+      <div class="input-item col-md-3">
+        <input type="date"
+               [(ngModel)]="searchCriteria.dateFin"
+               (ngModelChange)="onAutomaticSearch()"
+               name="dateFin" />
+      </div>
+      <div class="input-item col-md-3">
+        <input type="text"
+               [(ngModel)]="searchCriteria.periode"
+               (ngModelChange)="onAutomaticSearch()"
+               name="periode"
+               placeholder="Période..." />
+      </div>
+    </div>
+  </div>
+
+  <fieldset class="custom-fieldset">
+    <legend class="custom-legend custom-legend-relative">
+      <i class="fas fa-list-ul"></i> Liste des demandes
+    </legend>
+    <div class="card" *ngIf="!isLoading">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th class="text-left">Employeur</th>
+                <th class="text-left">Matricule</th>
+                <th class="text-left">Période</th>
+                <th class="text-left">État</th>
+                <th class="text-left">Date de Création<i class="fas fa-sort ml-2"></i></th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr *ngFor="let demande of filteredDemandes"
+                  [ngClass]="getStatusClass(demande.etatNom)"
+                  (click)="viewDetails(demande.idCrgDemande)"
+                  style="cursor: pointer;">
+                <td class="text-left">{{ demande.employeurNom }}</td>
+                <td class="text-left">{{ demande.matricule }}</td>
+                <td class="text-left">{{ demande.periode }}</td>
+                <td class="text-left">
+                  <span>
+                    <i [ngClass]="getIconClass(demande.etatNom)"></i>
+                      {{ demande.etatNom }}
+                  </span>
+                </td>
+                <td class="text-left">{{ demande.dateCreation | date: 'dd/MM/yyyy' }}</td>
+                <td class="text-center">
+                  <div class="action-buttons">
+                    <button type="button"
+                            class="btn btn-warning btn-circle"
+                            *ngIf="demande.etatNom === 'En attente'"
+                            (click)="navigateToUpdate(demande.idCrgDemande); $event.stopPropagation();"
+                            placement="top"
+                            ngbTooltip="Modifier">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <ng-template #noData>
+      <p class="no-data-message">Aucune demande trouvée.</p>
+    </ng-template>
+    <div class="export-container">
+      <button class="btn btn-success btn-export" (click)="exportToExcel()">
+        <i class="fas fa-file-excel mr-2"></i>
+        Exporter en Excel
+      </button>
+    </div>
+  </fieldset>
+</div>

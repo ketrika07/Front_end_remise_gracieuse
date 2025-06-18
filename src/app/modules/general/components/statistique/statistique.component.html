@@ -1,0 +1,110 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Chargement...</p>
+</ngx-spinner>
+<p style="color: white" *ngIf="isLoading">Chargement...</p>
+
+<div class="stats-containers">
+  <div class="stat-card total-demandes-container">
+    <div class="stat-card-header">
+      <i class="bi bi-file-earmark-text total-demandes-icon"></i>
+      <h3>Total des demandes</h3>
+    </div>
+    <div class="stat-card-body">
+      <p *ngIf="!isLoading">{{ totalDemandes | number }}</p>
+    </div>
+  </div>
+
+  <div class="stat-card demandes-traitees-container">
+    <div class="stat-card-header">
+      <i class="bi bi-check-circle demandes-traitees-icon"></i>
+      <h3>Demandes traitées</h3>
+    </div>
+    <div class="stat-card-body">
+      <p *ngIf="!isLoading">{{ demandesTraitees | number }}</p>
+    </div>
+  </div>
+
+  <div class="stat-card demandes-en-attente-container">
+    <div class="stat-card-header">
+      <i class="bi bi-hourglass-split demandes-en-attente-icon"></i>
+      <h3>Demandes en attente</h3>
+    </div>
+    <div class="stat-card-body">
+      <p *ngIf="!isLoading">{{ demandesEnAttente | number }}</p>
+    </div>
+  </div>
+
+  <div class="stat-card montant-total-du-container">
+    <div class="stat-card-header">
+      <i class="bi bi-currency-dollar montant-total-du-icon"></i>
+      <h3>Montant total Majoré</h3>
+    </div>
+    <div class="stat-card-body">
+      <p *ngIf="!isLoading">{{ montantTotalDu | number:'1.2-2':'fr-FR' }} Ar</p>
+    </div>
+  </div>
+</div>
+
+<div class="statistique-wrapper">
+  <div class="statistique-container">
+    <div class="main-layout">
+      <div class="main-chart-column">
+        <div class="chart-box large-chart">
+          <div class="chart-container">
+            <canvas id="demandesStatsChart" *ngIf="!isLoading"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="right-chart-column">
+        <div class="chart-box">
+          <div class="chart-container">
+            <canvas id="demandesByMotifChart" *ngIf="!isLoading"></canvas>
+          </div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-container">
+            <canvas id="mrDueChart" *ngIf="!isLoading"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="chart-box large-chart">
+    <div class="chart-container">
+      <canvas #tauxCanvas></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="chart-box large-chart">
+    <div class="chart-container">
+      <canvas id="demandesByPeriodeCanvas" *ngIf="!isLoading"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="chart-box large-chart">
+    <div class="chart-container">
+      <canvas id="montantEmployeurCanvas" *ngIf="!isLoading"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-section">
+  <div class="chart-box large-chart">
+    <div class="chart-container">
+      <canvas id="demandesByEmployeurCanvas" *ngIf="!isLoading"></canvas>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

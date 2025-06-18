@@ -1,0 +1,332 @@
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid" [ngClass]="{'opacity-50': isLoading}" *ngIf="demandeDetails">
+  <div class="card custom-card">
+    <div class="card-body p-4">
+      <fieldset class="custom-fieldset">
+        <legend class="custom-legend">
+          <i class="fa fa-file-signature pr-2"></i> Détails
+        </legend>
+
+        <div class="form-row mb-4">
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="matricule">Matricule</label>
+            <input id="matricule" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.matricule"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="etat">État</label>
+            <input id="etat" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.etat?.nom"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="dateCreation">Date de Création</label>
+            <input id="dateCreation" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.dateCreation | date: 'dd-MM-yyyy'"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+        </div>
+
+        <div class="form-row mb-4">
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="telephone">Téléphone</label>
+            <input id="telephone" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.telephone"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="email">Email</label>
+            <input id="email" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.email"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="periode">Période</label>
+            <input id="periode" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.periode"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+        </div>
+
+        <div class="form-row mb-4">
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="motif">Motif</label>
+            <input id="motif" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.motif"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="mrDue">MR Due</label>
+            <input id="mrDue" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.mrDue | numberSeparator"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="observation">Observation</label>
+            <input id="observation" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.observation"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+        </div>
+
+        <div class="form-row mb-4">
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="sessionDate">Date de Session</label>
+            <input id="sessionDate" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.sessionDate | date: 'dd-MM-yyyy'"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="nouveauMrDue">Nouveau MR Due</label>
+            <input id="nouveauMrDue" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.nouveauMrDue | numberSeparator"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="datePaiement">Date de Paiement</label>
+            <input id="datePaiement" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.datePaiement | date: 'dd-MM-yyyy'"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+        </div>
+
+        <div class="form-row mb-4">
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="dateLimite">Date Limite</label>
+            <input id="dateLimite" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.dateLimite | date: 'dd-MM-yyyy'"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="retardNbJour">Retard (Jours)</label>
+            <input id="retardNbJour" type="text" class="form-control custom-input"
+                   [value]="demandeDetails?.detailsDemande?.retardNbJour"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="retardNbMois">Retard (Mois)</label>
+            <input id="retardNbMois" type="text" class="form-control custom-input"
+                   [value]="demandeDetails?.detailsDemande?.retardNbMois"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+        </div>
+
+        <div class="form-row mb-4">
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="retardNbAn">Retard (Années)</label>
+            <input id="retardNbAn" type="text" class="form-control custom-input"
+                   [value]="demandeDetails?.detailsDemande?.retardNbAn"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="pourcentageSanction">Pourcentage CRG</label>
+            <input id="pourcentageSanction" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.detailsDemande?.tauxCrg?.pourcentageSanction + ' %'"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+          <div class="form-group col-md-4">
+            <label class="custom-label" for="numeroReferenceDossier">Numéro de Référence du Dossier</label>
+            <input id="numeroReferenceDossier" type="text" class="form-control custom-input"
+                   [value]="demandeDetails.numeroReferenceDossier"
+                   [disabled]="true"
+                   readonly
+                   (input)="preventInput($event)"
+                   (keydown)="preventInput($event)"
+                   (keypress)="preventInput($event)"
+                   (keyup)="preventInput($event)">
+          </div>
+        </div>
+
+
+        <!-- Files Section -->
+        <div class="mt-4">
+          <h6 class="text-primary mb-3">Fichiers joints</h6>
+          <div class="row" *ngIf="files$ | async as files">
+            <ng-container *ngIf="files.length > 0; else noFiles">
+              <div class="col-md-3 mb-3" *ngFor="let file of files; trackBy: trackByFileName">
+                <div class="card h-100">
+                  <div class="card-body p-3 text-center">
+                    <div class="mb-3" style="height: 100px;">
+                      <ng-container [ngSwitch]="file.type">
+                        <img *ngSwitchCase="'image'" [src]="file.url" class="img-fluid h-100" [alt]="file.name"
+                             (error)="file.loadError = true" [class.d-none]="file.loadError">
+                        <i *ngSwitchDefault [class]="'fas fa-3x ' + (file.type === 'pdf' ? 'fa-file-pdf' : 'fa-file')"></i>
+                      </ng-container>
+                    </div>
+                    <p class="text-truncate mb-2">{{ file.name }}</p>
+                    <a [href]="file.url" download="{{ file.name }}" class="btn btn-sm btn-outline-primary">
+                      <i class="fas fa-download mr-1"></i> Télécharger
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-end mt-4">
+          <button class="btn btn-outline-primary mr-2" (click)="openPopup()"
+                  [disabled]="isLoading" *ngIf="demandeDetails?.etat?.idEtat === 2">
+            <i class="fas fa-envelope mr-1"></i> Aperçu notification
+          </button>
+          <button class="btn btn-success mr-2" (click)="validateDemande()"
+                  [disabled]="isLoading" *ngIf="demandeDetails?.etat?.idEtat === 1">
+            <i class="fas fa-check mr-1"></i> Valider
+          </button>
+          <button class="btn btn-primary" (click)="openObservationModal()" [disabled]="isLoading">
+            <i class="fas fa-comment mr-1"></i> Ajouter Observation
+          </button>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- Email Preview Modal -->
+  <div class="preview-modal" *ngIf="isPopupOpen">
+    <div class="modal-content">
+      <button class="close-btn" (click)="closePopup()">
+        <i class="fas fa-times"></i>
+      </button>
+      <app-email *ngIf="demandeId" [idCrgDemande]="demandeId"></app-email>
+      <div class="modal-footer">
+        <button class="btn btn-export" (click)="exportPdf()">
+          <i class="fas fa-file-pdf"></i> Export PDF
+        </button>
+        <button class="btn btn-primary" (click)="sendEmail()">
+          <i class="fas fa-envelope"></i> Envoyer Email
+        </button>
+      </div>
+    </div>
+  </div>
+
+<!-- Observation Modal -->
+<!-- Observation Modal -->
+<!-- Observation Modal -->
+<div class="modal fade" [class.show]="isObservationModalOpen" [style.display]="isObservationModalOpen ? 'block' : 'none'">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title modal-title-custom">
+          <i class="fa fa-comment pr-2"></i> Ajouter une observation
+        </h5>
+        <button type="button" class="close" (click)="closeObservationModal()">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea id="newObservation" class="form-control" rows="4" [(ngModel)]="newObservation"
+                  placeholder="Saisissez votre observation..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeObservationModal()">Annuler</button>
+        <button class="btn btn-primary" (click)="submitObservation()"
+                [disabled]="!newObservation">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- Modal Backdrop -->
+  <div class="modal-backdrop fade show" *ngIf="isPopupOpen || isObservationModalOpen"></div>
+</div>
+
+<ng-template #noFiles>
+  <div class="col text-center text-muted py-5">
+    <i class="fas fa-folder-open display-4"></i>
+    <p class="mt-3">Aucun fichier disponible</p>
+  </div>
+</ng-template>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Chargement...</p>
+</ngx-spinner>

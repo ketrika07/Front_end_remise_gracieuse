@@ -1,0 +1,50 @@
+<div class="email-popup">
+  <div class="email-content">
+    <div class="header">
+      <h2>CAISSE NATIONALE DE PREVOYANCE SOCIALE</h2>
+      <h3>Antananarivo le, {{currentDate | date:'dd-MM-yyyy'}}</h3>
+      <p *ngIf="detailsDemande.length > 0">{{detailsDemande[0].employeurNom}}</p>
+    </div>
+    <div class="reference">
+      <p><strong>N/Réf :</strong>{{ numeroReferenceDossier }}</p>
+      <p><strong>Matricule Employeur:</strong> {{detailsDemande.length > 0 ? detailsDemande[0].employeurMatricule : ''}}</p>
+    </div>
+    <p>Messieurs,</p>
+    <p>
+      Suite à votre demande, nous avons l'honneur de vous transmettre la décision de la Commission Permanente du conseil d'administration :
+    </p>
+
+    <table class="situation-table">
+      <thead>
+        <tr>
+          <th>Date d'échéance</th>
+          <th>Période</th>
+          <th>Montant des Régularisations</th>
+          <th>Pourcentage</th>
+          <th>Nouveau Montant</th>
+          <th>Observation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of detailsDemande">
+          <td>{{detail.dateLimite | date:'dd-MM-yyyy'}}</td>
+          <td>{{detail.periode}}</td>
+          <td>{{detail.mrDue | number:'1.2-2'}} Ar</td>
+          <td>{{detail.pourcentageSanction}}%</td>
+          <td>{{detail.nouveauMrDue | number:'1.2-2'}} Ar</td>
+          <td>{{detail.observation}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Il est à noter que cette décision est irrévocable.</p>
+
+    <p>
+      Nous vous rappelons de respecter les délais pour éviter des sanctions.
+    </p>
+
+    <p>Veuillez agréer, Messieurs, nos salutations distinguées.</p>
+
+    <!-- <button class="close-btn" (click)="closePopup()">Fermer</button> -->
+  </div>
+</div>

@@ -1,0 +1,84 @@
+$background-color: #ffffff; // Blanc
+$primary-color: #1f618d; // Bleu
+$secondary-color: darken($primary-color, 10%); // Une teinte plus foncée de bleu
+$border-color: #ddd; // Gris clair pour les bordures
+$input-focus-color: lighten($primary-color, 10%); // Couleur de focus pour les inputs
+$button-hover-color: lighten($primary-color, 15%); // Couleur de hover pour les boutons
+
+.demande-update-container {
+  max-width: 600px;
+  margin: 120px auto;
+  padding: 30px;
+  background-color: $background-color;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 60px;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.form-group {
+  margin-bottom: 25px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: $primary-color;
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+    &:focus {
+      border-color: $input-focus-color;
+      box-shadow: 0 0 8px rgba($input-focus-color, 0.2);
+    }
+  }
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.update-btn {
+  background-color: $primary-color;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: $button-hover-color;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.modal-title-custom {
+  font-size: 1.25rem; /* Adjust the size as needed */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  color: $primary-color; /* Use the primary color defined in your SCSS */
+}
+
+.modal-title-custom i {
+  margin-right: 0.5rem;
+}

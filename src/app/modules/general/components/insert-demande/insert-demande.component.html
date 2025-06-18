@@ -1,0 +1,202 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card custom-card">
+        <div class="card-body p-4">
+          <form (ngSubmit)="onSubmit(crgForm)" #crgForm="ngForm" novalidate>
+            <fieldset class="custom-fieldset">
+              <legend class="custom-legend">
+                <i class="fa fa-file-signature pr-2"></i> Demande De Commission De Remise Gracieuse
+              </legend>
+
+              <!-- Information Employeur -->
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="custom-label">Numéro de matriculation*</label>
+                  <input type="text"
+                         class="form-control custom-input"
+                         name="matriculation"
+                         [(ngModel)]="formData.matriculation"
+                         (change)="onMatriculationChange()"
+                         #matriculation="ngModel"
+                         placeholder="Entrez votre numero matricule"
+                         required>
+                  <div *ngIf="matriculation.invalid && (matriculation.dirty || matriculation.touched || crgForm.submitted)" class="text-danger">
+                    Ce champ est obligatoire
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="custom-label">Raison Sociale</label>
+                  <input type="text"
+                         class="form-control custom-input"
+                         name="raisonSociale"
+                         [(ngModel)]="formData.raisonSociale"
+                         readonly>
+                </div>
+              </div>
+
+              <!-- Coordonnées -->
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label class="custom-label">Email*</label>
+                  <input type="email"
+                         class="form-control custom-input"
+                         name="email"
+                         [(ngModel)]="formData.email"
+                         #email="ngModel"
+                         placeholder="rakoto@gmail.com"
+                         required>
+                  <div *ngIf="email.invalid && (email.dirty || email.touched || crgForm.submitted)" class="text-danger">
+                    Ce champ est obligatoire
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label class="custom-label">Contact téléphonique*</label>
+                  <input type="tel"
+                         class="form-control custom-input"
+                         name="phone"
+                         [(ngModel)]="formData.phone"
+                         #phone="ngModel"
+                         placeholder="038XXXXXXX"
+                         required>
+                  <div *ngIf="phone.invalid && (phone.dirty || phone.touched || crgForm.submitted)" class="text-danger">
+                    Ce champ est obligatoire
+                  </div>
+                </div>
+              </div>
+
+              <!-- Périodes -->
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="custom-label">Période(s) concernée(s) par la demande de CRG *</label>
+                  <div *ngFor="let period of formData.periods; let i = index" class="form-row">
+                    <!-- Champ Année -->
+                    <div class="form-group col-md-6">
+                      <input type="text"
+                             class="form-control custom-input"
+                             [name]="'annee' + i"
+                             [(ngModel)]="formData.periods[i].annee"
+                             list="yearList"
+                             placeholder="Saisir ou sélectionner l'année"
+                             #annee="ngModel"
+                             required>
+                      <datalist id="yearList">
+                        <option *ngFor="let year of availableYears" [value]="year">{{year}}</option>
+                      </datalist>
+                      <!-- Message d'erreur pour l'année -->
+                      <div *ngIf="annee.invalid && (annee.dirty || annee.touched || crgForm.submitted)" class="text-danger">
+                        L'année est obligatoire.
+                      </div>
+                    </div>
+
+                    <!-- Champ Trimestre -->
+                    <div class="form-group col-md-5">
+                      <input type="text"
+                             class="form-control custom-input"
+                             [name]="'trimestre' + i"
+                             [(ngModel)]="formData.periods[i].trimestre"
+                             list="quarterList"
+                             placeholder="Saisir ou sélectionner le trimestre"
+                             #trimestre="ngModel"
+                             required>
+                      <datalist id="quarterList">
+                        <option value="1">Trimestre 1</option>
+                        <option value="2">Trimestre 2</option>
+                        <option value="3">Trimestre 3</option>
+                        <option value="4">Trimestre 4</option>
+                      </datalist>
+                      <!-- Message d'erreur pour le trimestre -->
+                      <div *ngIf="trimestre.invalid && (trimestre.dirty || trimestre.touched || crgForm.submitted)" class="text-danger">
+                        Le trimestre est obligatoire.
+                      </div>
+                    </div>
+
+                    <!-- Bouton Ajouter -->
+                    <div class="col-md-1">
+                      <button type="button"
+                              class="btn btn-add-period"
+                              (click)="addNewPeriodInput()"
+                              [disabled]="!canAddNewPeriod()">
+                        <i class="bi bi-plus-circle-fill"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Motif -->
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label class="custom-label">Motif de la demande*</label>
+                  <select class="form-control custom-input"
+                          name="selectedMotif"
+                          [(ngModel)]="formData.selectedMotif"
+                          (change)="toggleInputs()"
+                          #motif="ngModel"
+                          required>
+                    <option value="" disabled selected>Sélectionnez un motif</option>
+                    <option *ngFor="let motif of motifs" [ngValue]="motif.value">
+                      {{motif.description}}
+                    </option>
+                  </select>
+                  <div *ngIf="motif.invalid && (motif.dirty || motif.touched || crgForm.submitted)" class="text-danger">
+                    Veuillez sélectionner un motif
+                  </div>
+                </div>
+              </div>
+
+              <!-- Input pour "Autre motif" -->
+              <div *ngIf="formModal.showOtherMotifInput" class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="otherMotif" class="custom-label">Autre motif</label>
+                  <input type="text"
+                         id="otherMotif"
+                         name="otherMotif"
+                         [(ngModel)]="formData.otherMotif"
+                         (ngModelChange)="onOtherMotifChange()"
+                         class="form-control custom-input"
+                         placeholder="Veuillez préciser le motif">
+                </div>
+              </div>
+
+              <!-- Input pour "Erreur de la banque" -->
+              <div *ngIf="formModal.showFileInput" class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="fileUpload" class="custom-label">Télécharger un fichier</label>
+                  <div class="custom-file">
+                    <input type="file"
+                           id="fileUpload"
+                           name="fileUpload"
+                           accept=".pdf,.jpg,.jpeg,.png"
+                           class="custom-file-input"
+                           (change)="onFileSelected($event)"
+                           #fileInput>
+                    <label class="custom-file-label" for="fileUpload">
+                      {{ formData.fileUpload?.name || 'Choisir un fichier' }}
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="row">
+                <div class="col-md-12 text-right">
+                  <button type="button" class="btn btn-cnaps-error mr-2">
+                    <i class="fa fa-times pr-2"></i>ANNULER
+                  </button>
+                  <button type="submit" class="btn btn-cnaps-save">
+                    <i class="fa fa-save pr-2"></i>ENVOYER
+                  </button>
+                </div>
+                <!-- Ajouter dans le template, avant la fermeture du body -->
+                <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+                  <p style="color: white">Chargement...</p>
+                </ngx-spinner>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

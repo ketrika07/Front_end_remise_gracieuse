@@ -1,0 +1,102 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="timer" [fullScreen]="true">
+  <p style="color: white">Chargement...</p>
+</ngx-spinner>
+<p style="color: white" *ngIf="isLoading">Chargement...</p>
+
+<div [class.hidden]="isLoading">
+    <div class="statistique-container">
+      <div class="rwd-table-container monthly-stats">
+        <div class="page-title">
+          <h1>
+            <i class="fas fa-chart-bar"></i>
+            Statistiques Mensuelles des Demandes
+          </h1>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover table-striped" id="monthlyStatsTable">
+            <thead>
+              <tr>
+                <th>Période</th>
+                <th>Nombre de demandes</th>
+                <th>MoyenneJoursRetard</th>
+                <th>MoyenneMoisRetard</th>
+                <th>Total Initial (Ar)</th>
+                <th>Total Majoré (Ar)</th>
+                <th>Taux CRG (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stat of monthlyStats">
+                <td data-th="Période">{{stat.periode}}</td>
+                <td data-th="Nombre de demandes">{{stat.nombreDemandes | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="Moyenne jours retard">{{stat.moyenneJoursRetard | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="Moyenne mois retard">{{stat.moyenneMoisRetard | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="Total Initial">{{stat.totalInitial | number:'1.2-2':'fr-FR'}} Ar</td>
+                <td data-th="Total Majoré">{{stat.totalMajore | number:'1.2-2':'fr-FR'}} Ar</td>
+                <td data-th="% Majoration">{{stat.pourcentageMajoration | number:'1.2-2':'fr-FR'}}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="export-button-container">
+          <button class="export-button" (click)="exportToExcel()">
+            <i class="fas fa-file-excel"></i> Exporter en Excel
+          </button>
+        </div>
+      </div>
+
+      <div class="rwd-table-container date-range-stats">
+        <div class="page-title">
+          <h1>
+            <i class="fas fa-calendar-alt"></i>
+            Statistiques entre deux dates
+          </h1>
+        </div>
+        <div class="date-inputs">
+          <div class="form-group">
+            <label for="startDate" class="custom-label">Date de début:</label>
+            <input type="date"
+                  id="startDate"
+                  [(ngModel)]="startDate"
+                  class="form-control custom-input">
+          </div>
+          <div class="form-group">
+            <label for="endDate" class="custom-label">Date de fin:</label>
+            <input type="date"
+                  id="endDate"
+                  [(ngModel)]="endDate"
+                  class="form-control custom-input">
+          </div>
+          <button class="search-button" (click)="onDateSearch()" [disabled]="!startDate || !endDate">
+            <i class="fas fa-search"></i> Rechercher
+          </button>
+        </div>
+        <div class="table-responsive" id="dateRangeResults">
+          <table class="table table-hover table-striped" *ngIf="dateRangeStats.length > 0" #resultTable>
+            <thead>
+              <tr>
+                <th>Taux_CRG</th>
+                <th>Nombre de Périodes</th>
+                <th>Nombre de Demandes</th>
+                <th>MR Majoré</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stat of dateRangeStats">
+                <td data-th="Pourcentage Sanction">{{stat.pourcentageSanction | number:'1.2-2':'fr-FR'}}%</td>
+                <td data-th="Nombre de Périodes">{{stat.nombrePeriode | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="Nombre de Demandes">{{stat.nombreDemandes | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="MR Annulée">{{stat.mrAnnulee | number:'1.2-2':'fr-FR'}} Ar</td>
+              </tr>
+              <tr *ngIf="aggregatedStats">
+                <td data-th="Pourcentage Sanction">Total</td>
+                <td data-th="Nombre de Périodes">{{aggregatedStats.nombrePeriode | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="Nombre de Demandes">{{aggregatedStats.nombreDemandes | number:'1.0-0':'fr-FR'}}</td>
+                <td data-th="MR Annulée">{{aggregatedStats.mrAnnulee | number:'1.2-2':'fr-FR'}} Ar</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
